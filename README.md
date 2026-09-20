@@ -1,10 +1,11 @@
 # Enterprise Security Fusion Platform
 
+[![Ecosystem CI](https://github.com/usman-masthan/enterprise-security-fusion-platform/actions/workflows/ecosystem-ci.yml/badge.svg)](https://github.com/usman-masthan/enterprise-security-fusion-platform/actions/workflows/ecosystem-ci.yml)
+[![Auto-Sync Submodules](https://github.com/usman-masthan/enterprise-security-fusion-platform/actions/workflows/submodule-sync.yml/badge.svg)](https://github.com/usman-masthan/enterprise-security-fusion-platform/actions/workflows/submodule-sync.yml)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
 [![Architecture: Converged Fusion](https://img.shields.io/badge/Architecture-Converged%20SecOps%20Fusion-purple.svg)]()
 [![Submodules: 3 Connected](https://img.shields.io/badge/Submodules-3%20Integrated-brightgreen.svg)]()
-[![Integration Tests: Passing](https://img.shields.io/badge/Tests-Passing%20(100%25)-brightgreen.svg)]()
-[![CI/CD: Automated Sync](https://img.shields.io/badge/CI%2FCD-Event--Driven%20Auto--Sync-orange.svg)]()
+[![Integration Tests: Passing](https://img.shields.io/badge/Tests-4%2F4%20Passing%20(100%25)-brightgreen.svg)]()
 [![Target: Financial Markets Infrastructure](https://img.shields.io/badge/Target-FMI%20%7C%20LSEG%20SecOps-darkblue.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -33,37 +34,37 @@ The **Enterprise Security Fusion Platform** solves this by unifying three purpos
 flowchart TD
     subgraph TELEMETRY["1. Multi-Discipline Telemetry Ingestion"]
         direction TB
-        T1["Offensive VAPT (secure-web-vapt-lab)\n• DAST Scanner Alerts (ZAP)\n• Confirmed Manual Exploits (SQLi, API Leaks)\n• Heuristic Noise Elimination"]
-        T2["Explainable NDR (explainable-netflow-ids)\n• NetFlow v9 / IPFIX Telemetry\n• Isolation Forest Anomaly Engine\n• TreeSHAP Local & Global Explanations"]
-        T3["SecOps Feeds (agentic-soc-triage)\n• Financial Crime (Transaction Anomaly)\n• Physical Security (Badge Anomaly)\n• External Threat Intel (C2/IoCs)"]
+        T1["Offensive VAPT (secure-web-vapt-lab)<br/>• DAST Scanner Alerts (ZAP)<br/>• Confirmed Manual Exploits (SQLi, API Leaks)<br/>• Heuristic Noise Elimination"]
+        T2["Explainable NDR (explainable-netflow-ids)<br/>• NetFlow v9 / IPFIX Telemetry<br/>• Isolation Forest Anomaly Engine<br/>• TreeSHAP Local & Global Explanations"]
+        T3["SecOps Feeds (agentic-soc-triage)<br/>• Financial Crime (Transaction Anomaly)<br/>• Physical Security (Badge Anomaly)<br/>• External Threat Intel (C2/IoCs)"]
     end
 
     subgraph ADAPTERS["2. Normalization & Asset Modeling Layer"]
         direction TB
-        A1["VAPT Adapter\n(core/vapt_adapter.py)"]
-        A2["IDS Adapter\n(core/ids_adapter.py)"]
-        A3["Asset Vulnerability Profiles\n(Host:Port Posture Tracker)"]
+        A1["VAPT Adapter<br/>(core/vapt_adapter.py)"]
+        A2["IDS Adapter<br/>(core/ids_adapter.py)"]
+        A3["Asset Vulnerability Profiles<br/>(Host:Port Posture Tracker)"]
         T1 --> A1 --> A3
         T2 --> A2
     end
 
     subgraph CORRELATION["3. Cross-Discipline Correlation Engine"]
         direction TB
-        C1["Compound Threat Evaluator\n(core/correlation_engine.py)"]
-        C2{"Active Network Attack\nTargets Host with\nUnpatched Vuln?"}
+        C1["Compound Threat Evaluator<br/>(core/correlation_engine.py)"]
+        C2{"Active Network Attack<br/>Targets Host with<br/>Unpatched Vuln?"}
         A2 --> C1
         A3 --> C1
         T3 --> C1
         C1 --> C2
-        C2 -- YES --> E1["Elevate to CRITICAL FMI Incident\n• Flag: is_compound_threat = True\n• Emergency 15-min SLA Enforcement"]
+        C2 -- YES --> E1["Elevate to CRITICAL FMI Incident<br/>• Flag: is_compound_threat = True<br/>• Emergency 15-min SLA Enforcement"]
         C2 -- NO --> E2["Standard Risk Evaluation"]
     end
 
     subgraph TRIAGE_CORE["4. Converged Fusion SOC Triage"]
         direction TB
-        S1["Context-Aware Routing Engine\n(projects/agentic-soc-triage/triage_engine.py)"]
-        S2["Tier 1 (L1) Queue\n(Standard baseline triage)"]
-        S3["Tier 2 (L2) Queue\n(Critical FMI escalation)"]
+        S1["Context-Aware Routing Engine<br/>(projects/agentic-soc-triage/triage_engine.py)"]
+        S2["Tier 1 (L1) Queue<br/>(Standard baseline triage)"]
+        S3["Tier 2 (L2) Queue<br/>(Critical FMI escalation)"]
         E1 --> S1
         E2 --> S1
         S1 --> S2
@@ -72,10 +73,10 @@ flowchart TD
 
     subgraph ARTIFACTS["5. Unified Enterprise Outputs"]
         direction TB
-        O1["unified_alerts.json\n(Enriched Alert Stream)"]
-        O2["triage_decision_log.csv\n(Auditable DORA / FCA Log)"]
-        O3["fusion_operational_insights.json\n(Executive KPIs & SLA Metrics)"]
-        O4["unified_splunk_cim.json\n(Splunk CIM Enterprise Bundle)"]
+        O1["unified_alerts.json<br/>(Enriched Alert Stream)"]
+        O2["triage_decision_log.csv<br/>(Auditable DORA / FCA Log)"]
+        O3["fusion_operational_insights.json<br/>(Executive KPIs & SLA Metrics)"]
+        O4["unified_splunk_cim.json<br/>(Splunk CIM Enterprise Bundle)"]
         S1 --> O1
         S1 --> O2
         S1 --> O3
@@ -93,7 +94,7 @@ flowchart TD
 
 ## 3. Automated Cross-Repository Synchronization
 
-A primary requirement of the ecosystem is that **a commit pushed to any child repository must immediately update the umbrella main repository**.
+A fundamental requirement of this architecture is that **a commit pushed to any child repository automatically updates the umbrella main repository**.
 
 ```mermaid
 sequenceDiagram
@@ -108,21 +109,27 @@ sequenceDiagram
     SUB->>UMB: POST /repos/.../dispatches (event_type: submodule-update)
     UMB->>CI: Launches .github/workflows/submodule-sync.yml
     CI->>CI: git submodule update --remote --merge
-    CI->>CI: python run_ecosystem.py --all
-    CI->>CI: python -m unittest discover tests
+    CI->>CI: python3 run_ecosystem.py --all
+    CI->>CI: python3 -m unittest discover tests
     CI->>UMB: git commit -m "chore(submodules): auto-sync [skip ci]" & git push
     Note over UMB: Umbrella repo is fully up-to-date and tested!
 ```
 
 ### How It Works:
 1. **Child-to-Parent Dispatch Trigger**:
-   - Each child repository includes `.github/workflows/notify-umbrella.yml` (available as a template in [`.github/workflows/templates/notify-umbrella.yml`](.github/workflows/templates/notify-umbrella.yml)).
-   - When code is pushed to `main` in `agentic-soc-triage`, `explainable-netflow-ids`, or `secure-web-vapt-lab`, GitHub Actions fires a `repository_dispatch` event to the umbrella repository.
+   - Each child repository includes [`.github/workflows/notify-umbrella.yml`](.github/workflows/templates/notify-umbrella.yml).
+   - When code is pushed to `main` in `agentic-soc-triage`, `explainable-netflow-ids`, or `secure-web-vapt-lab`, GitHub Actions fires a `repository_dispatch` webhook event to the umbrella repository.
 2. **Umbrella Auto-Sync & Verification Workflow**:
-   - [`.github/workflows/submodule-sync.yml`](.github/workflows/submodule-sync.yml) listens for `repository_dispatch`, runs an hourly cron backup (`cron: '0 * * * *'`), and supports manual one-click execution (`workflow_dispatch`).
+   - [`.github/workflows/submodule-sync.yml`](.github/workflows/submodule-sync.yml) listens for `repository_dispatch`, runs an **hourly scheduled cron** (`cron: '0 * * * *'`), and supports **manual 1-click execution** (`workflow_dispatch`).
    - It runs `git submodule update --init --recursive --remote --merge` to fast-forward all submodules to their newest upstream commits.
-   - It executes the full integration suite (`test_fusion_integration.py`) and pipeline runner (`run_ecosystem.py --all`).
+   - It executes the full integration test suite (`test_fusion_integration.py`) and pipeline runner (`run_ecosystem.py --all`).
    - If changes are detected, it automatically commits and pushes the updated submodule pointers directly to `main`.
+
+### Optional: Enabling Instant Real-Time Dispatch Token
+To enable zero-latency webhook dispatch between repositories:
+1. Create a GitHub Personal Access Token (PAT) with `repo` scope.
+2. Add it as a repository secret named **`UMBRELLA_SYNC_TOKEN`** in each child repo's **Settings $\rightarrow$ Secrets and variables $\rightarrow$ Actions**.
+*(Note: Even without this token, the umbrella repo automatically synchronizes every hour via its scheduled cron job).*
 
 ---
 
@@ -164,9 +171,9 @@ enterprise-security-fusion-platform/
 │   │       └── notify-umbrella.yml    # Dispatch action snippet for child repos
 ├── .gitmodules                        # Configured submodules pointing to GitHub remotes
 ├── projects/
-│   ├── agentic-soc-triage/            # Submodule 1: git@github.com:usman-masthan/agentic-soc-triage.git
-│   ├── explainable-netflow-ids/       # Submodule 2: git@github.com:usman-masthan/explainable-netflow-ids.git
-│   └── secure-web-vapt-lab/           # Submodule 3: git@github.com:usman-masthan/secure-web-vapt-lab.git
+│   ├── agentic-soc-triage/            # Submodule 1: https://github.com/usman-masthan/agentic-soc-triage.git
+│   ├── explainable-netflow-ids/       # Submodule 2: https://github.com/usman-masthan/explainable-netflow-ids.git
+│   └── secure-web-vapt-lab/           # Submodule 3: https://github.com/usman-masthan/secure-web-vapt-lab.git
 ├── core/
 │   ├── __init__.py
 │   ├── schemas.py                     # Normalized data contracts (FusionAlert, AssetProfile)
@@ -206,7 +213,7 @@ cd enterprise-security-fusion-platform
 python3 run_ecosystem.py --all
 ```
 
-**Expected Terminal Output:**
+**Live Terminal Output:**
 ```
 ================================================================================
                       EXECUTIVE OPERATIONAL DASHBOARD
@@ -243,8 +250,12 @@ python3 run_ecosystem.py --all
 python3 -m unittest discover -s tests -p "test_*.py" -v
 ```
 
-### 4. Sync Submodules to Latest Remote Commits
+### 4. Check & Sync Submodules
 ```bash
+# Check current submodule commit SHAs
+python3 run_ecosystem.py --status
+
+# Pull latest commits from all three submodules
 python3 run_ecosystem.py --sync
 # or: make sync
 ```
@@ -272,4 +283,3 @@ The generated audit logs and operational reports directly support mandatory comp
 ## 8. License
 
 This umbrella project and its orchestration architecture are distributed under the [MIT License](LICENSE). Individual submodules retain their respective open-source licensing.
-
