@@ -69,3 +69,4 @@ class AssetVulnerabilityProfile:
             "cvss": cvss,
             "evidence": evidence
         })
+

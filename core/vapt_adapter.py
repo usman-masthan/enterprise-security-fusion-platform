@@ -152,3 +152,4 @@ class VAPTAdapter:
                 alerts.append(alert)
 
         return alerts, self.asset_profiles
+

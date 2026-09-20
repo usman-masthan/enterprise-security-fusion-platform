@@ -119,3 +119,4 @@ class IDSAdapter:
             alerts.append(alert)
 
         return alerts
+

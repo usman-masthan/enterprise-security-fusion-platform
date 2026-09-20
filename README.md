@@ -272,3 +272,4 @@ The generated audit logs and operational reports directly support mandatory comp
 ## 8. License
 
 This umbrella project and its orchestration architecture are distributed under the [MIT License](LICENSE). Individual submodules retain their respective open-source licensing.
+

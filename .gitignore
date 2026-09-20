@@ -20,3 +20,4 @@ env/
 # Testing & temporary output
 data/test_output/
 *.log
+
