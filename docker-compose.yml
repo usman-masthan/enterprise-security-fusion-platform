@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # 1. Target Vulnerable Web Application (VAPT Lab)
+  vapt-juice-shop:
+    image: bkimminich/juice-shop:v17.1.1
+    container_name: fusion-vapt-juice-shop
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=development
+    networks:
+      - fusion-net
+
+  # 2. Network Anomaly Detection & TreeSHAP XAI Dashboard
+  netflow-ids-dashboard:
+    build:
+      context: ./projects/explainable-netflow-ids
+      dockerfile: Dockerfile
+    container_name: fusion-ids-dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./projects/explainable-netflow-ids/reports:/app/reports
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_HEADLESS=true
+    networks:
+      - fusion-net
+
+  # 3. Enterprise Fusion Core Orchestrator
+  fusion-orchestrator:
+    image: python:3.11-slim
+    container_name: fusion-orchestrator
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    command: python3 run_ecosystem.py --all
+    networks:
+      - fusion-net
+
+networks:
+  fusion-net:
+    driver: bridge

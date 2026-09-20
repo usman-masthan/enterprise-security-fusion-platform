@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches and environments
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+ENV/
+env/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Testing & temporary output
+data/test_output/
+*.log

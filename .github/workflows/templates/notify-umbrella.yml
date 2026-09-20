@@ -1,0 +1,25 @@
+# Place this workflow file in each child repository at:
+# .github/workflows/notify-umbrella.yml
+#
+# Whenever changes are merged to 'main' in this child repo,
+# it automatically notifies the umbrella repository to pull the update and re-test!
+
+name: Notify Umbrella Ecosystem
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  dispatch-sync:
+    name: Trigger Umbrella Repo Submodule Sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch Update Event to Umbrella Repo
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.UMBRELLA_SYNC_TOKEN }}
+          repository: usman-masthan/enterprise-security-fusion-platform
+          event-type: submodule-update
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "repo": "${{ github.repository }}"}'

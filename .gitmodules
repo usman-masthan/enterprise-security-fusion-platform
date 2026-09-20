@@ -1,0 +1,12 @@
+[submodule "projects/agentic-soc-triage"]
+	path = projects/agentic-soc-triage
+	url = https://github.com/usman-masthan/agentic-soc-triage.git
+	branch = main
+[submodule "projects/explainable-netflow-ids"]
+	path = projects/explainable-netflow-ids
+	url = https://github.com/usman-masthan/explainable-netflow-ids.git
+	branch = main
+[submodule "projects/secure-web-vapt-lab"]
+	path = projects/secure-web-vapt-lab
+	url = https://github.com/usman-masthan/secure-web-vapt-lab.git
+	branch = main

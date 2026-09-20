@@ -1,0 +1,48 @@
+name: Enterprise Ecosystem CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-ecosystem:
+    name: Test Full Ecosystem & Cross-Module Integration
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Umbrella Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verify Submodule Integrity
+        run: |
+          echo "Checking submodule directories..."
+          test -d projects/agentic-soc-triage
+          test -d projects/explainable-netflow-ids
+          test -d projects/secure-web-vapt-lab
+          git submodule status
+
+      - name: Execute End-to-End Pipeline
+        run: |
+          python3 run_ecosystem.py --all
+
+      - name: Run Test Suite
+        run: |
+          python3 -m unittest discover -s tests -p "test_*.py" -v
+
+      - name: Validate Generated Reports
+        run: |
+          test -f data/unified_output/unified_alerts.json
+          test -f data/unified_output/triage_decision_log.csv
+          test -f data/unified_output/fusion_operational_insights.json
+          test -f data/unified_output/unified_splunk_cim.json
+          echo "All enterprise reports generated successfully."

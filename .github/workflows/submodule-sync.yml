@@ -1,0 +1,62 @@
+name: Auto-Sync Submodules & Integration
+
+on:
+  repository_dispatch:
+    types: [submodule-update, child-repo-push]
+  schedule:
+    # Runs at the start of every hour to catch any updates automatically
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-and-test:
+    name: Sync Submodules & Run Integration Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Umbrella Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Pull Latest Upstream Commits for Submodules
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive --remote --merge
+
+      - name: Verify Submodule SHAs
+        run: |
+          echo "=== Submodule Status After Update ==="
+          git submodule status
+
+      - name: Run End-to-End Fusion Pipeline
+        run: |
+          python3 run_ecosystem.py --all
+
+      - name: Run Integration Tests
+        run: |
+          python3 -m unittest discover -s tests -p "test_*.py"
+
+      - name: Commit and Push Updated Submodule Pointers
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          if [ -n "$(git status --porcelain projects/ data/unified_output/)" ]; then
+            echo "Submodule changes detected. Committing pointer updates..."
+            git add projects/ data/unified_output/
+            git commit -m "chore(submodules): auto-sync submodules to latest upstream commits [skip ci]"
+            git push origin main
+          else
+            echo "All submodules are already up to date. No commit needed."
+          fi

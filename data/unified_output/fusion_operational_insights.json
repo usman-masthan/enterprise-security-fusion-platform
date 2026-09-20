@@ -1,0 +1,52 @@
+{
+  "timestamp": "2026-09-20T12:30:00Z",
+  "total_alerts_ingested": 25,
+  "tier_distribution": {
+    "Tier 1 (L1)": 14,
+    "Tier 2 (L2)": 11,
+    "l2_escalation_rate_pct": 44.0
+  },
+  "severity_distribution": {
+    "Critical": 5,
+    "High": 5,
+    "Medium": 6,
+    "Low": 5
+  },
+  "sla_commitments": {
+    "15 mins": 5,
+    "30 mins": 5,
+    "60 mins": 6,
+    "120 mins": 9
+  },
+  "telemetry_source_distribution": {
+    "secure-web-vapt-lab": 13,
+    "explainable-netflow-ids": 4,
+    "agentic-soc-triage": 8
+  },
+  "compound_threat_events": [
+    {
+      "compound_id": "CMP-FUS-NET-ANOM-001",
+      "target": "127.0.0.1:3000",
+      "active_attack": "NetFlow Anomaly: Port Scan & Service Sweep",
+      "target_vulns": [
+        "Authentication Bypass via SQL Injection",
+        "Sensitive Internal API Exposure",
+        "Overly Permissive CORS Misconfiguration"
+      ],
+      "compound_severity": "Critical",
+      "rationale": "COMPOUND RISK ESCALATION: Active intrusion attempt (NetFlow Anomaly: Port Scan & Service Sweep) is targeting vulnerable asset 127.0.0.1:3000. Host has 3 unpatched vulnerability(ies): [Authentication Bypass via SQL Injection, Sensitive Internal API Exposure, Overly Permissive CORS Misconfiguration]. Highest asset CVSS: 9.8. XAI Evidence: TreeSHAP Drivers: flow_duration (-2.10) indicates high-speed sweep; tcp_flags=SYN (+1.85); packets_per_second (+1.42)."
+    },
+    {
+      "compound_id": "CMP-FUS-NET-ANOM-002",
+      "target": "127.0.0.1:3000",
+      "active_attack": "NetFlow Anomaly: Volumetric SYN Flood / DoS Attempt",
+      "target_vulns": [
+        "Authentication Bypass via SQL Injection",
+        "Sensitive Internal API Exposure",
+        "Overly Permissive CORS Misconfiguration"
+      ],
+      "compound_severity": "Critical",
+      "rationale": "COMPOUND RISK ESCALATION: Active intrusion attempt (NetFlow Anomaly: Volumetric SYN Flood / DoS Attempt) is targeting vulnerable asset 127.0.0.1:3000. Host has 3 unpatched vulnerability(ies): [Authentication Bypass via SQL Injection, Sensitive Internal API Exposure, Overly Permissive CORS Misconfiguration]. Highest asset CVSS: 9.8. XAI Evidence: TreeSHAP Drivers: packets_per_second (+2.89) is 45x above benign baseline; bytes_per_packet (+1.95); tcp_flags strictly SYN (+1.20)."
+    }
+  ]
+}
